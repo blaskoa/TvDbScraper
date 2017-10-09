@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using HtmlAgilityPack;
+using TvDbScraper.Parsers;
 
 namespace TvDbScraper
 {
    class Program
    {
-      private const string TmpFileName = "index.html";
+      private const string TmpFileName = "275360.html";
       static void Main(string[] args)
       {
 
@@ -33,7 +34,9 @@ namespace TvDbScraper
          
          HtmlDocument document = new HtmlDocument();
          document.LoadHtml(result);
+         SeriesParser parser = new SeriesParser(document);
 
+         parser.ParseFromDocument();
          Console.Out.WriteLine(result);
          //Console.ReadLine();
 

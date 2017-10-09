@@ -45,8 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlRepresentations\BaseHtmlFieldRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\HtmlFieldRepresentationFactory.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesIdRepresentation.cs" />
     <Compile Include="HttpManager.cs" />
+    <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\Episode.cs" />
+    <Compile Include="Model\Season.cs" />
     <Compile Include="Model\Series.cs" />
+    <Compile Include="Parsers\SeriesParser.cs" />
+    <Compile Include="Parsers\UnknownFieldException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
