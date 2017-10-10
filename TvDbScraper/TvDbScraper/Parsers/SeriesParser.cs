@@ -34,13 +34,13 @@ namespace TvDbScraper.Parsers
             {
                List<HtmlNode> tableCells = tableRow.ChildNodes.Where(x => TableCellHtmlName.Equals(x.Name)).ToList();
                Tuple<HtmlNode, HtmlNode> htmlFieldTuple = new Tuple<HtmlNode, HtmlNode>(tableCells[0], tableCells[1]);
-               BaseHtmlFieldRepresentation<Series> fieldRepresentation = 
+               BaseHtmlFieldRepresentation<Series> fieldRepresentation =
                   HtmlFieldRepresentationFactory.FromHtmlTableCellTupleForSeries(htmlFieldTuple);
 
-               fieldRepresentation.FillModel(result);
+               fieldRepresentation?.FillModel(result);
             }
          }
-         
+
          return result;
       }
    }

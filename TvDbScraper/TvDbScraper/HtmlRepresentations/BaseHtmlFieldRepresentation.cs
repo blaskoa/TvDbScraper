@@ -1,9 +1,8 @@
 ﻿using HtmlAgilityPack;
-using TvDbScraper.Model;
 
 namespace TvDbScraper.HtmlRepresentations
 {
-   public abstract class BaseHtmlFieldRepresentation <T> where T: BaseModel
+   public abstract class BaseHtmlFieldRepresentation<T>
    {
       protected readonly HtmlNode ValueNode;
 

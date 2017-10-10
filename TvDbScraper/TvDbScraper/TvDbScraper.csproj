@@ -47,9 +47,17 @@
   <ItemGroup>
     <Compile Include="HtmlRepresentations\BaseHtmlFieldRepresentation.cs" />
     <Compile Include="HtmlRepresentations\HtmlFieldRepresentationFactory.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\FirstAiredRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesGenreRepresentation.cs" />
     <Compile Include="HtmlRepresentations\SeriesFields\SeriesIdRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesNameRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesNetworkRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesOverviewRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesPeriodicityAndAirTimeRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesRatingRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesRuntimeRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\SeriesFields\SeriesStatusRepresentation.cs" />
     <Compile Include="HttpManager.cs" />
-    <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\Episode.cs" />
     <Compile Include="Model\Season.cs" />
     <Compile Include="Model\Series.cs" />
