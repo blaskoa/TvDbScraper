@@ -21,7 +21,7 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
       {
          HtmlNode periodicitySelect = ValueNode.ChildNodes.FindFirst("select");
          HtmlNode selectedOption = periodicitySelect.ChildNodes.FirstOrDefault(x => x.Attributes.Contains("selected"));
-         modelToFill.SeriesPeriodicity = Series.GetPeriodicityFromString(selectedOption?.InnerText.Trim());
+         modelToFill.SeriesPeriodicity = Series.GetPeriodicityFromString(selectedOption?.NextSibling.InnerText.Trim());
       }
       private void FillAirTime(Series modelToFill)
       {

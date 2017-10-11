@@ -5,7 +5,7 @@ namespace TvDbScraper
 {
    public class HttpManager
    {
-      private const string BaseUrl = "https://www.thetvdb.com/index.php?tab=series&id=275360";
+      private const string BaseUrl = "https://www.thetvdb.com/index.php?tab=series&id=289590";
       private HttpClient _httpClient;
       
 

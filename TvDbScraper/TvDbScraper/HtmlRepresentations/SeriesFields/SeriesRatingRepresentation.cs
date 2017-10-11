@@ -13,7 +13,7 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
       public override void FillModel(Series modelToFill)
       {
          string stringValue = ValueNode.ChildNodes.FindFirst("select").ChildNodes
-            .FirstOrDefault(x => x.Attributes.Contains("selected"))?.InnerText.Trim();
+            .FirstOrDefault(x => x.Attributes.Contains("selected"))?.NextSibling.InnerText.Trim();
 
          modelToFill.SeriesRating = Series.GetRatingFromString(stringValue);
       }
