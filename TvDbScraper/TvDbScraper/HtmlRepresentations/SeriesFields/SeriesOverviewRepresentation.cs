@@ -12,7 +12,7 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
 
       public override void FillModel(Series modelToFill)
       {
-         modelToFill.Overview = ValueNode.ChildNodes.FirstOrDefault(x => "Overview_7".Equals(x.GetAttributeValue("name", string.Empty)))?.InnerText;
+         modelToFill.Overview = ValueNode.ChildNodes.FirstOrDefault(x => "Overview_7".Equals(x.GetAttributeValue("name", string.Empty)))?.InnerText.Trim();
       }
    }
 }

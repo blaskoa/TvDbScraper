@@ -2,15 +2,15 @@
 using HtmlAgilityPack;
 using TvDbScraper.Model;
 
-namespace TvDbScraper.HtmlRepresentations.SeriesFields
+namespace TvDbScraper.HtmlRepresentations.EpisodeFields
 {
-   public class FirstAiredRepresentation : BaseHtmlFieldRepresentation<Series>
+   public class EpisodeAiredRepresentation : BaseHtmlFieldRepresentation<Episode>
    {
-      public FirstAiredRepresentation(HtmlNode valueNode) : base(valueNode)
+      public EpisodeAiredRepresentation(HtmlNode valueNode) : base(valueNode)
       {
       }
 
-      public override void FillModel(Series modelToFill)
+      public override void FillModel(Episode modelToFill)
       {
          DateTime? result = null;
          string dateTimeString = ValueNode.ChildNodes.FindFirst("input").GetAttributeValue("value", string.Empty)
@@ -19,8 +19,8 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
          {
             result = DateTime.Parse(dateTimeString);
          }
-
-         modelToFill.FirstTimeAired = result;
+         
+         modelToFill.DateAired = result;
       }
    }
 }

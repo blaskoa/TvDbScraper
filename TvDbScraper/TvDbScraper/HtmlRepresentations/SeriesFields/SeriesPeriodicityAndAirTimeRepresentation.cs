@@ -25,8 +25,15 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
       }
       private void FillAirTime(Series modelToFill)
       {
-         HtmlNode airTimeInput = ValueNode.ChildNodes.FindFirst("input");
-         modelToFill.AirTime = DateTime.Parse(airTimeInput.GetAttributeValue("value", string.Empty));
+         DateTime? result = null;
+         string dateTimeString = ValueNode.ChildNodes.FindFirst("input").GetAttributeValue("value", string.Empty)
+            .Trim();
+         if (!string.IsNullOrWhiteSpace(dateTimeString))
+         {
+            result = DateTime.Parse(dateTimeString);
+         }
+
+         modelToFill.AirTime = result;
       }
    }
 }

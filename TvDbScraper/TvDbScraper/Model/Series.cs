@@ -15,8 +15,8 @@ namespace TvDbScraper.Model
       public SeriesStatus SeriesStatus { get; set; }
       public string Overview { get; set; }
       public List<SeriesGenre> SeriesGenres { get; set; }
-      public DateTime FirstTimeAired { get; set; }
-      public DateTime AirTime { get; set; }
+      public DateTime? FirstTimeAired { get; set; }
+      public DateTime? AirTime { get; set; }
       public SeriesPeriodicity SeriesPeriodicity { get; set; }
       public string Network { get; set; }
       public int RuntimeInMinutes { get; set; }

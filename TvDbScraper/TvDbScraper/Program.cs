@@ -9,11 +9,17 @@ namespace TvDbScraper
 {
    class Program
    {
+      private static HtmlFileLoader _fileLoader;
       static void Main(string[] args)
       {
-         HtmlFileLoader fileLoader = new HtmlFileLoader();
+         _fileLoader = new HtmlFileLoader();
 
-         HtmlDocument document = fileLoader.GetDocument(FileRepresentation.FromSeriesId("289590"));
+         Series series = ParseAllSeriesInformation("289590");
+      }
+
+      private static Series ParseAllSeriesInformation(string seriesId)
+      {
+         HtmlDocument document = _fileLoader.GetDocument(FileRepresentation.FromSeriesId(seriesId));
          SeriesParser seriesParser = new SeriesParser(document);
 
          Series series = seriesParser.ParseFromDocument();
@@ -23,10 +29,10 @@ namespace TvDbScraper
 
          foreach (FileRepresentation seasonFile in seasonFiles)
          {
-            HtmlDocument seasonDocument = fileLoader.GetDocument(seasonFile);
+            HtmlDocument seasonDocument = _fileLoader.GetDocument(seasonFile);
             SeasonParser seasonParser = new SeasonParser(seasonDocument);
 
-            Season season = seasonParser.ParseFromDocument();
+            Season season = seasonParser.ParseFromDocument(seasonFile.SeasonId);
             series.Seasons.Add(season);
 
             List<string> episodeLinks = seasonParser.GetEpisodeLinks();
@@ -34,15 +40,14 @@ namespace TvDbScraper
 
             foreach (FileRepresentation episodeFile in episodeFiles)
             {
-               HtmlDocument episodeDocument = fileLoader.GetDocument(episodeFile);
+               HtmlDocument episodeDocument = _fileLoader.GetDocument(episodeFile);
                EpisodeParser episodeParser = new EpisodeParser(episodeDocument);
 
-               Episode episode = episodeParser.ParseFromDocument();
+               Episode episode = episodeParser.ParseFromDocument(episodeFile.EpisodeId);
                season.Episodes.Add(episode);
             }
          }
-
-
+         return series;
       }
    }
 }

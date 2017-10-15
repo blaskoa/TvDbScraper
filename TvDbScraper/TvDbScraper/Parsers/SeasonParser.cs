@@ -15,10 +15,11 @@ namespace TvDbScraper.Parsers
          _document = document;
       }
 
-      public Season ParseFromDocument()
+      public Season ParseFromDocument(string id)
       {
          Season result = new Season();
 
+         result.Id = int.Parse(id);
          ParseSeasonName(result);
          FillEpisodeLinks();
          result.EpisodeCount = _episodeLinks.Count;

@@ -12,7 +12,7 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
 
       public override void FillModel(Series modelToFill)
       {
-         int fieldValue = Int32.Parse(ValueNode.InnerText);
+         int fieldValue = int.Parse(ValueNode.InnerText);
          modelToFill.Id = fieldValue;
       }
    }

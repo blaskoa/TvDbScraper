@@ -49,6 +49,14 @@
     <Compile Include="File\FileRepresentation.cs" />
     <Compile Include="File\HtmlFileLoader.cs" />
     <Compile Include="HtmlRepresentations\BaseHtmlFieldRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeAiredRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeDirectorRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeGuestStarsRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeNameRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeNumberRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeOverviewRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeProductionCodeRepresentation.cs" />
+    <Compile Include="HtmlRepresentations\EpisodeFields\EpisodeWritersRepresentation.cs" />
     <Compile Include="HtmlRepresentations\HtmlFieldRepresentationFactory.cs" />
     <Compile Include="HtmlRepresentations\SeriesFields\FirstAiredRepresentation.cs" />
     <Compile Include="HtmlRepresentations\SeriesFields\SeriesGenreRepresentation.cs" />
