@@ -10,7 +10,8 @@ namespace TvDbScraper.Model
 
       public int Id { get; set; }
       public string Name { get; set; }
-      public short Rating { get; set; }
+      public int Rating { get; set; }
+      public int NumberOfRatings { get; set; }
       public SeriesStatus SeriesStatus { get; set; }
       public string Overview { get; set; }
       public List<SeriesGenre> SeriesGenres { get; set; }

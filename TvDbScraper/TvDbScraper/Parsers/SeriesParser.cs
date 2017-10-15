@@ -24,7 +24,10 @@ namespace TvDbScraper.Parsers
       public Series ParseFromDocument()
       {
          Series result = new Series();
-         //todo also parse rating
+
+         ParseAndFillUserRatings(result);
+         ParseAndFillNumberOfRatings(result);
+
          HtmlNode form = _seriesPage.GetElementbyId(FormRootId).ChildNodes.FindFirst(FormHtmlName);
          HtmlNode table = form.ChildNodes.FirstOrDefault(x => DatatableId.Equals(x.Id));
 
@@ -42,6 +45,22 @@ namespace TvDbScraper.Parsers
          }
 
          return result;
+      }
+
+      private void ParseAndFillNumberOfRatings(Series result)
+      {
+         HtmlNode numberOfRatings = _seriesPage.GetElementbyId("smalltext");
+         string ratingCount = numberOfRatings.InnerText.Trim().Split(' ')[0];
+
+         result.NumberOfRatings = int.Parse(ratingCount);
+      }
+
+      private void ParseAndFillUserRatings(Series result)
+      {
+         HtmlNode fanArtDiv = _seriesPage.GetElementbyId("fanart");
+         int countOfStars = fanArtDiv.Descendants("img")
+            .Count(x => "/images/largestar_on.gif".Equals(x.GetAttributeValue("src", string.Empty)));
+         result.Rating = countOfStars;
       }
    }
 }
