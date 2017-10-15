@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using TvDbScraper.File;
 using TvDbScraper.Model;
@@ -13,8 +14,24 @@ namespace TvDbScraper
       static void Main(string[] args)
       {
          _fileLoader = new HtmlFileLoader();
+         List<string> seriesIds = new List<string> {"75897", "277165", "79168"};
 
-         Series series = ParseAllSeriesInformation("289590");
+         List<Series> resultSeries = new List<Series>(seriesIds.Count);
+         List<Task> crawlingTasks = new List<Task>(seriesIds.Count);
+
+         foreach (string id in seriesIds)
+         {
+            crawlingTasks.Add(Task.Run(() =>
+               {
+                  resultSeries.Add(ParseAllSeriesInformation(id));
+               }
+            ));
+         }
+
+         foreach (Task task in crawlingTasks)
+         {
+            task.Wait();
+         }
       }
 
       private static Series ParseAllSeriesInformation(string seriesId)
