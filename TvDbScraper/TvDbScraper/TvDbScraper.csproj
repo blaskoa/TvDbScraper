@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="File\FileRepresentation.cs" />
+    <Compile Include="File\HtmlFileLoader.cs" />
     <Compile Include="HtmlRepresentations\BaseHtmlFieldRepresentation.cs" />
     <Compile Include="HtmlRepresentations\HtmlFieldRepresentationFactory.cs" />
     <Compile Include="HtmlRepresentations\SeriesFields\FirstAiredRepresentation.cs" />
@@ -61,6 +64,8 @@
     <Compile Include="Model\Episode.cs" />
     <Compile Include="Model\Season.cs" />
     <Compile Include="Model\Series.cs" />
+    <Compile Include="Parsers\EpisodeParser.cs" />
+    <Compile Include="Parsers\SeasonParser.cs" />
     <Compile Include="Parsers\SeriesParser.cs" />
     <Compile Include="Parsers\UnknownFieldException.cs" />
     <Compile Include="Program.cs" />

@@ -47,6 +47,21 @@ namespace TvDbScraper.Parsers
          return result;
       }
 
+      public List<string> GetSeasonsLinks()
+      {
+         List<string> result = new List<string>();
+         HtmlNodeCollection nodes = _seriesPage.DocumentNode.SelectNodes("//div[contains(@id,\'content\')]");
+         HtmlNode seriesNode = nodes.FirstOrDefault(x => "Seasons".Equals(x.ChildNodes.FindFirst("h1").InnerText));
+
+         if (seriesNode != null)
+         {
+            result = seriesNode.ChildNodes.Where(x => "a".Equals(x.Name) && !"All".Equals(x.InnerText))
+               .Select(x => x.GetAttributeValue("href", string.Empty)).ToList();
+         }
+
+         return result;
+      }
+
       private void ParseAndFillNumberOfRatings(Series result)
       {
          HtmlNode numberOfRatings = _seriesPage.GetElementbyId("smalltext");

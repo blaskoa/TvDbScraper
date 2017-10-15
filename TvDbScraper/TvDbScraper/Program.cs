@@ -1,44 +1,47 @@
-﻿using System;
-using System.IO;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HtmlAgilityPack;
+using TvDbScraper.File;
+using TvDbScraper.Model;
 using TvDbScraper.Parsers;
 
 namespace TvDbScraper
 {
    class Program
    {
-      private const string TmpFileName = "289590.html";
       static void Main(string[] args)
       {
+         HtmlFileLoader fileLoader = new HtmlFileLoader();
 
-         HttpManager manager = new HttpManager();
-         FileInfo fileInfo = new FileInfo(TmpFileName);
-         string result;
-         if (!fileInfo.Exists)
+         HtmlDocument document = fileLoader.GetDocument(FileRepresentation.FromSeriesId("289590"));
+         SeriesParser seriesParser = new SeriesParser(document);
+
+         Series series = seriesParser.ParseFromDocument();
+
+         List<string> seasonsLinks = seriesParser.GetSeasonsLinks();
+         List<FileRepresentation> seasonFiles = seasonsLinks.Select(FileRepresentation.FromSeasonLink).ToList();
+
+         foreach (FileRepresentation seasonFile in seasonFiles)
          {
-            result = manager.GetWebPage();
-            using (var stream = fileInfo.CreateText())
+            HtmlDocument seasonDocument = fileLoader.GetDocument(seasonFile);
+            SeasonParser seasonParser = new SeasonParser(seasonDocument);
+
+            Season season = seasonParser.ParseFromDocument();
+            series.Seasons.Add(season);
+
+            List<string> episodeLinks = seasonParser.GetEpisodeLinks();
+            List<FileRepresentation> episodeFiles = episodeLinks.Select(FileRepresentation.FromEpisodeLink).ToList();
+
+            foreach (FileRepresentation episodeFile in episodeFiles)
             {
-               stream.WriteLine(result);
-               stream.Flush();
+               HtmlDocument episodeDocument = fileLoader.GetDocument(episodeFile);
+               EpisodeParser episodeParser = new EpisodeParser(episodeDocument);
+
+               Episode episode = episodeParser.ParseFromDocument();
+               season.Episodes.Add(episode);
             }
          }
-         else
-         {
-            using (var stream = fileInfo.OpenText())
-            {
-               result = stream.ReadToEnd();
-            }
-         }
-         
-         
-         HtmlDocument document = new HtmlDocument();
-         document.LoadHtml(result);
-         SeriesParser parser = new SeriesParser(document);
 
-         parser.ParseFromDocument();
-         Console.Out.WriteLine(result);
-         //Console.ReadLine();
 
       }
    }

@@ -23,6 +23,12 @@ namespace TvDbScraper.Model
       public SeriesRating SeriesRating { get; set; }
       public List<Season> Seasons { get; set; }
 
+      public Series()
+      {
+         Seasons = new List<Season>();
+         SeriesGenres = new List<SeriesGenre>();
+      }
+
       #region Enum converters
       public static SeriesStatus GetStatusFromString(string stringStatus)
       {

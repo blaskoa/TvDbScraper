@@ -5,7 +5,8 @@ namespace TvDbScraper
 {
    public class HttpManager
    {
-      private const string BaseUrl = "https://www.thetvdb.com/index.php?tab=series&id=289590";
+      public const string TestUrl = "/index.php?tab=series&id=289590";
+      private const string BaseUrl = "https://www.thetvdb.com";
       private HttpClient _httpClient;
       
 
@@ -14,12 +15,18 @@ namespace TvDbScraper
          _httpClient = new HttpClient();
       }
 
-      public string GetWebPage()
+      public string GetWebPage(string url)
       {
-         Task<HttpResponseMessage> httpResult = _httpClient.GetAsync(BaseUrl);
+         string resultUrl = BaseUrl + url;
+         Task<HttpResponseMessage> httpResult = _httpClient.GetAsync(resultUrl);
          var result = httpResult.Result.Content.ReadAsStringAsync();
 
          return result.Result;
+      }
+
+      public static string GetCompleteUri(string link)
+      {
+         return BaseUrl + link;
       }
    }
 }
