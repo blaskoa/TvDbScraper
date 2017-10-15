@@ -28,10 +28,7 @@ namespace TvDbScraper
             ));
          }
 
-         foreach (Task task in crawlingTasks)
-         {
-            task.Wait();
-         }
+         Task.WaitAll(crawlingTasks.ToArray());
       }
 
       private static Series ParseAllSeriesInformation(string seriesId)
