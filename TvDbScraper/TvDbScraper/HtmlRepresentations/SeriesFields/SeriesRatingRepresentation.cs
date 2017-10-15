@@ -15,7 +15,7 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
          string stringValue = ValueNode.ChildNodes.FindFirst("select").ChildNodes
             .FirstOrDefault(x => x.Attributes.Contains("selected"))?.NextSibling.InnerText.Trim();
 
-         modelToFill.SeriesRating = Series.GetRatingFromString(stringValue);
+         modelToFill.SeriesRating = stringValue;
       }
    }
 }

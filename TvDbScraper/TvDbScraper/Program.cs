@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Nest;
 using TvDbScraper.File;
 using TvDbScraper.Model;
 using TvDbScraper.Parsers;
@@ -15,6 +16,7 @@ namespace TvDbScraper
       {
          _fileLoader = new HtmlFileLoader();
          List<string> seriesIds = new List<string> {"75897", "277165", "79168"};
+         seriesIds = seriesIds.Distinct().ToList();
 
          List<Series> resultSeries = new List<Series>(seriesIds.Count);
          List<Task> crawlingTasks = new List<Task>(seriesIds.Count);
@@ -29,6 +31,13 @@ namespace TvDbScraper
          }
 
          Task.WaitAll(crawlingTasks.ToArray());
+
+         ElasticClient client = new ElasticClient(new ConnectionSettings().DefaultIndex("series"));
+         foreach (Series series in resultSeries)
+         {
+            IIndexResponse response = client.Index(series);
+         }
+         
       }
 
       private static Series ParseAllSeriesInformation(string seriesId)

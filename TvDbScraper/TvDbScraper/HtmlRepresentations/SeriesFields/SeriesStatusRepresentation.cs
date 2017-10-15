@@ -20,7 +20,7 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
          HtmlNode selectedOption = select.ChildNodes.FirstOrDefault(x => x.Attributes.Contains(SelectedAttributeName));
          string selectedValue = selectedOption?.GetAttributeValue(ValueAttributeName, string.Empty);
 
-         modelToFill.SeriesStatus = Series.GetStatusFromString(selectedValue);
+         modelToFill.SeriesStatus = selectedValue;
       }
    }
 }

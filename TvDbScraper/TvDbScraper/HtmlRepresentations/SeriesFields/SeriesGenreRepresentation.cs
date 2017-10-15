@@ -22,7 +22,7 @@ namespace TvDbScraper.HtmlRepresentations.SeriesFields
          modelToFill.SeriesGenres 
             = value.Split(ValueDelimiter.ToCharArray())
             .Where(x => !string.IsNullOrWhiteSpace(x))
-            .Select(Series.GetGenreFromString).ToList();
+            .ToList();
       }
    }
 }

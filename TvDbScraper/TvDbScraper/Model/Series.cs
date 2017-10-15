@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TvDbScraper.Model
 {
@@ -12,40 +13,26 @@ namespace TvDbScraper.Model
       public string Name { get; set; }
       public int Rating { get; set; }
       public int NumberOfRatings { get; set; }
-      public SeriesStatus SeriesStatus { get; set; }
+      public string SeriesStatus { get; set; }
       public string Overview { get; set; }
-      public List<SeriesGenre> SeriesGenres { get; set; }
+      public List<string> SeriesGenres { get; set; }
       public DateTime? FirstTimeAired { get; set; }
       public DateTime? AirTime { get; set; }
-      public SeriesPeriodicity SeriesPeriodicity { get; set; }
+      public string SeriesPeriodicity { get; set; }
       public string Network { get; set; }
       public int RuntimeInMinutes { get; set; }
-      public SeriesRating SeriesRating { get; set; }
+      public string SeriesRating { get; set; }
       public List<Season> Seasons { get; set; }
+      public int SeasonCount => Seasons.Count;
+      public int EpisodeCount => Seasons.Sum(x => x.EpisodeCount);
 
       public Series()
       {
          Seasons = new List<Season>();
-         SeriesGenres = new List<SeriesGenre>();
+         SeriesGenres = new List<string>();
       }
 
       #region Enum converters
-      public static SeriesStatus GetStatusFromString(string stringStatus)
-      {
-         SeriesStatus result = SeriesStatus.Unknown;
-         if (!string.IsNullOrWhiteSpace(stringStatus))
-         {
-            if (ContinuingStringValue.Equals(stringStatus))
-            {
-               result = SeriesStatus.Continuing;
-            }
-            else if (EndedStringValue.Equals(stringStatus))
-            {
-               result = SeriesStatus.Ended;
-            }
-         }
-         return result;
-      }
 
       public static SeriesGenre GetGenreFromString(string stringGenre)
       {
@@ -145,68 +132,7 @@ namespace TvDbScraper.Model
          }
          return result;
       }
-
-      public static SeriesPeriodicity GetPeriodicityFromString(string periodicityString)
-      {
-         SeriesPeriodicity result = SeriesPeriodicity.Undefined;
-
-         switch (periodicityString)
-         {
-            case "Sunday":
-               result = SeriesPeriodicity.Sunday;
-               break;
-            case "Monday":
-               result = SeriesPeriodicity.Monday;
-               break;
-            case "Tuesday":
-               result = SeriesPeriodicity.Tuesday;
-               break;
-            case "Wednesday":
-               result = SeriesPeriodicity.Wednesday;
-               break;
-            case "Thursday":
-               result = SeriesPeriodicity.Thursday;
-               break;
-            case "Friday":
-               result = SeriesPeriodicity.Friday;
-               break;
-            case "Saturday":
-               result = SeriesPeriodicity.Saturday;
-               break;
-            case "Daily":
-               result = SeriesPeriodicity.Daily;
-               break;
-         }
-         return result;
-      }
-
-      public static SeriesRating GetRatingFromString(string ratingString)
-      {
-         SeriesRating result = SeriesRating.Undefined;
-         switch (ratingString)
-         {
-            case "TV-Y":
-               result = SeriesRating.Y;
-               break;
-            case "TV-Y7":
-               result = SeriesRating.YSeven;
-               break;
-            case "TV-G":
-               result = SeriesRating.G;
-               break;
-            case "TV-PG":
-               result = SeriesRating.Pg;
-               break;
-            case "TV-14":
-               result = SeriesRating.Fourteen;
-               break;
-            case "TV-MA":
-               result = SeriesRating.Ma;
-               break;
-         }
-
-         return result;
-      }
+      
       #endregion
    }
 
