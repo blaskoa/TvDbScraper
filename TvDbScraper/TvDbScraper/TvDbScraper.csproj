@@ -32,11 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Elasticsearch.Net, Version=5.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\Elasticsearch.Net.5.5.0\lib\net45\Elasticsearch.Net.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.5.5.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.5.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Nest, Version=5.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\NEST.5.5.0\lib\net45\Nest.dll</HintPath>
@@ -55,6 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\Model\DenormalizedTvEpisode.cs" />
+    <Compile Include="Database\Model\TvEpisodes.cs" />
+    <Compile Include="Database\Model\TvSeasons.cs" />
+    <Compile Include="Database\Model\TvSeries.cs" />
     <Compile Include="File\FileRepresentation.cs" />
     <Compile Include="File\HtmlFileLoader.cs" />
     <Compile Include="HtmlRepresentations\BaseHtmlFieldRepresentation.cs" />
@@ -78,6 +89,7 @@
     <Compile Include="HtmlRepresentations\SeriesFields\SeriesRuntimeRepresentation.cs" />
     <Compile Include="HtmlRepresentations\SeriesFields\SeriesStatusRepresentation.cs" />
     <Compile Include="HttpManager.cs" />
+    <Compile Include="Model\DenormalizedEpisode.cs" />
     <Compile Include="Model\Episode.cs" />
     <Compile Include="Model\Season.cs" />
     <Compile Include="Model\Series.cs" />
@@ -92,5 +104,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

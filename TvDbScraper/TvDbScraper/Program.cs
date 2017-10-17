@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using HtmlAgilityPack;
+using MySql.Data.MySqlClient;
 using Nest;
+using TvDbScraper.Database.Model;
 using TvDbScraper.File;
 using TvDbScraper.Model;
 using TvDbScraper.Parsers;
@@ -12,30 +16,54 @@ namespace TvDbScraper
    class Program
    {
       private static HtmlFileLoader _fileLoader;
+      private const string ConnectionString = "Server=localhost; database=tvdb; UID=root; password=root";
+      private const bool ReadFromDatabase = true;
+      private const int pageSize = 500;
+
       static void Main(string[] args)
       {
          _fileLoader = new HtmlFileLoader();
          List<string> seriesIds = new List<string> {"75897", "277165", "79168"};
          seriesIds = seriesIds.Distinct().ToList();
 
+
+
          List<Series> resultSeries = new List<Series>(seriesIds.Count);
-         List<Task> crawlingTasks = new List<Task>(seriesIds.Count);
-
-         foreach (string id in seriesIds)
+         IEnumerable<DenormalizedTvEpisode> episodes;
+         
+         if (!ReadFromDatabase)
          {
-            crawlingTasks.Add(Task.Run(() =>
-               {
-                  resultSeries.Add(ParseAllSeriesInformation(id));
-               }
-            ));
+            List<Task> crawlingTasks = new List<Task>(seriesIds.Count);
+
+            foreach (string id in seriesIds)
+            {
+               crawlingTasks.Add(Task.Run(() =>
+                  {
+                     resultSeries.Add(ParseAllSeriesInformation(id));
+                  }
+               ));
+            }
+
+            Task.WaitAll(crawlingTasks.ToArray());
          }
-
-         Task.WaitAll(crawlingTasks.ToArray());
-
-         ElasticClient client = new ElasticClient(new ConnectionSettings().DefaultIndex("series"));
-         foreach (Series series in resultSeries)
+         else
          {
-            IIndexResponse response = client.Index(series);
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+               ElasticClient client = new ElasticClient(new ConnectionSettings().DefaultIndex("series"));
+
+               int numberOfResult = connection.QueryFirst<int>("select count(*) from tvdb.tvseries");
+               for (int page = 0; page < numberOfResult; page += pageSize)
+               {
+                  IEnumerable<int> seriesIdsFromDb = connection.Query<int>($"select id from tvdb.tvseries order by id limit {page},{pageSize}").ToList();
+                  int firstId = seriesIdsFromDb.First();
+                  int lastId = seriesIdsFromDb.Last();
+
+                  episodes = connection.Query<DenormalizedTvEpisode>(DenormalizedTvEpisode.DbSelect, new { firstId, lastId });
+                  var response = client.IndexMany(episodes.Select(x => x.ToDomainModel()));
+
+               }
+            }
          }
          
       }

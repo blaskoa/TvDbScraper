@@ -16,6 +16,9 @@ namespace TvDbScraper.Model
       public string Overview { get; set; }
       public int UserRating { get; set; }
       public int UserRatingCount { get; set; }
+      public int SeasonId { get; set; }
+      public string Name { get; set; }
+      public int EpisodeCount { get; set; }
 
       public Episode()
       {

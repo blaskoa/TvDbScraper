@@ -32,6 +32,44 @@ namespace TvDbScraper.Model
          SeriesGenres = new List<string>();
       }
 
+      public List<DenormalizedEpisode> ToDenormalizedEpisodes()
+      {
+         List<DenormalizedEpisode> result = new List<DenormalizedEpisode>(EpisodeCount);
+
+         foreach (Season season in Seasons)
+         {
+            foreach (Episode seasonEpisode in season.Episodes)
+            {
+               DenormalizedEpisode denormalizedEpisode = new DenormalizedEpisode
+               {
+                  SeriesAirTime = AirTime?.TimeOfDay,
+                  EpisodeDateAired = seasonEpisode.DateAired,
+                  SeasonNumber = int.Parse(season.Name.Split(' ')[0]),
+                  SeriesRating = SeriesRating,
+                  SeriesPeriodicity = SeriesPeriodicity,
+                  SeriesStatus = SeriesStatus,
+                  SeriesId = Id,
+                  EpisodeId = seasonEpisode.Id,
+                  SeriesGenres = SeriesGenres,
+                  GuestStars = seasonEpisode.GuestStars,
+                  Directors = seasonEpisode.Directors,
+                  Writers = seasonEpisode.Writers,
+                  EpisodeName = seasonEpisode.EpisodeName,
+                  ProductionCode = seasonEpisode.ProductionCode,
+                  EpisodeNumber = seasonEpisode.EpisodeNumber,
+                  FirstTimeAired = FirstTimeAired,
+                  RuntimeInMinutes = RuntimeInMinutes,
+                  Network = Network,
+                  EpisodeOverview = seasonEpisode.Overview,
+                  SeriesOverview = Overview
+               };
+               result.Add(denormalizedEpisode);
+            }
+         }
+
+         return result;
+      }
+
       #region Enum converters
 
       public static SeriesGenre GetGenreFromString(string stringGenre)
